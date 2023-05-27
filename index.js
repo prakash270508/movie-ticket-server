@@ -5,7 +5,6 @@ const colors = require("colors");
 const dotenv = require("dotenv");
 const userRoute = require("./routes/userRoute.js");
 const authRoute = require("./routes/auth.js");
-const orderRoute = require("./routes/orderRoute.js");
 const cookieParser = require("cookie-parser");
 const { connectDB } = require("./utils/db.js");
 dotenv.config();
@@ -21,7 +20,6 @@ app.use(cors());
 //Routes
 app.use("/user", userRoute);
 app.use("/auth", authRoute);
-app.use("/order", orderRoute);
 
 //
 app.get('/', (req, res)=>{
