@@ -11,3 +11,13 @@ exports.postTheater = async (req, res, next) => {
     next();
   }
 };
+
+//All theater
+exports.allTheaters = async (req, res, next) => {
+  try {
+    const theaters = await Theater.find();
+    res.status(200).json({ message: "Theater created successfully", theaters });
+  } catch (error) {
+    next();
+  }
+};

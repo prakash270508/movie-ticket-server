@@ -29,7 +29,6 @@ exports.register = async (req, res, next) => {
     } else if (error.keyValue.email) {
       next(createError(403, "Email Already exist"));
     }
-    console.log(error);
   }
 };
 

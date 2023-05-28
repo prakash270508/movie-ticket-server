@@ -2,22 +2,22 @@ const jwt = require("jsonwebtoken");
 const { createError } = require("./error");
 const User = require("../models/userModel");
 
-// const verifyToken = async (req, res, next) => {
+const verifyTokenCookie = async (req, res, next) => {
 
-//   // console.log(req.headers.authorization)
+  // console.log(req.headers.authorization)
 
-//   const token = req.cookies.user_Token;
+  const token = req.cookies.user_Token;
 
-//   if (!token) {
-//     return next(createError(403, "Please login"));
-//   }
+  if (!token) {
+    return next(createError(403, "Please login"));
+  }
 
-//   let data = jwt.verify(token, process.env.JWT_SECRETE);
+  let data = jwt.verify(token, process.env.JWT_SECRETE);
 
-//   req.user = await User.findById(data._id);
+  req.user = await User.findById(data._id);
 
-//   next();
-// };
+  next();
+};
 
 const verifyToken = async (req, res, next) => {
 
@@ -55,5 +55,6 @@ const verifySelf = (req, res, next)=>{
 module.exports = {
   verifyToken,
   verifyAdmin,
-  verifySelf
+  verifySelf,
+  verifyTokenCookie
 };
