@@ -8,7 +8,7 @@ const sendEmail = require("../utils/sendMail");
 //Register
 exports.register = async (req, res, next) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
 
     const salt = bcrypt.genSaltSync(10);
     const hashPassword = bcrypt.hashSync(password, salt);
@@ -17,6 +17,7 @@ exports.register = async (req, res, next) => {
       username,
       email,
       password: hashPassword,
+      role,
     });
 
     await newUser.save();
@@ -28,6 +29,7 @@ exports.register = async (req, res, next) => {
     } else if (error.keyValue.email) {
       next(createError(403, "Email Already exist"));
     }
+    console.log(error);
   }
 };
 
