@@ -23,6 +23,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    role: {
+      type: String,
+      required: true,
+    },
     resetPasswordToken: String,
     resetPasswordExpire: Date,
   },
