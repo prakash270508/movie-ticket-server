@@ -16,7 +16,34 @@ exports.postTheater = async (req, res, next) => {
 exports.allTheaters = async (req, res, next) => {
   try {
     const theaters = await Theater.find();
-    res.status(200).json({ message: "Theater created successfully", theaters });
+    res.status(200).json({ theaters });
+  } catch (error) {
+    next();
+  }
+};
+
+exports.theaterById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const theater = await Theater.findById(id);
+    res.status(200).json({ theater });
+  } catch (error) {
+    next();
+  }
+};
+
+exports.bookSeat = async (req, res, next) => {
+  try {
+    const { id, seatId } = req.params;
+    const theater = await Theater.findById(id);
+
+    const seat = theater.seats.find((seat) => seat._id == seatId);
+
+    seat.isBooked = true;
+
+    await theater.save();
+
+    res.status(200).json({ seat });
   } catch (error) {
     next();
   }

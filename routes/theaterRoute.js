@@ -1,6 +1,11 @@
 const express = require("express");
 
-const { postTheater, allTheaters } = require("../controller/theaterController");
+const {
+  postTheater,
+  allTheaters,
+  theaterById,
+  bookSeat
+} = require("../controller/theaterController");
 const { verifyToken } = require("../utils/authentication");
 const uploadMiddleware = require("../utils/upload.js");
 const router = express.Router();
@@ -10,5 +15,7 @@ router
   .post(uploadMiddleware.single("image"), postTheater);
 
 router.route("/all-theaters").get(verifyToken, allTheaters);
+router.route("/:id").get(verifyToken, theaterById);
+router.route("/:id/:seatId").post(verifyToken, bookSeat);
 
 module.exports = router;
