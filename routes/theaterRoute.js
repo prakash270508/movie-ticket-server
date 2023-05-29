@@ -4,7 +4,7 @@ const {
   postTheater,
   allTheaters,
   theaterById,
-  bookSeat
+  bookSeat,
 } = require("../controller/theaterController");
 const { verifyToken } = require("../utils/authentication");
 const uploadMiddleware = require("../utils/upload.js");
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router
   .route("/post-theater")
-  .post(uploadMiddleware.single("image"), postTheater);
+  .post(verifyToken,  postTheater);
 
 router.route("/all-theaters").get(verifyToken, allTheaters);
 router.route("/:id").get(verifyToken, theaterById);

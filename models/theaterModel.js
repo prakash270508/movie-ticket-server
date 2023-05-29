@@ -5,6 +5,7 @@ const TheaterSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  ownerId: String,
   totalSeats: {
     type: Number,
     required: true,
@@ -34,7 +35,7 @@ const TheaterSchema = new mongoose.Schema({
   ],
 });
 
-TheaterSchema.pre("save", function(next){
+TheaterSchema.pre("save", function (next) {
   const theater = this;
 
   const { totalSeats } = theater;
@@ -42,8 +43,7 @@ TheaterSchema.pre("save", function(next){
     theater.seats.push({ seatNumber: i });
   }
 
-  next()
-
+  next();
 });
 
 module.exports = mongoose.model("Theater", TheaterSchema);
