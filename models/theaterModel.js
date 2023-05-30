@@ -44,7 +44,7 @@ TheaterSchema.pre("save", function (next) {
 
   const { totalSeats } = theater;
   for (let i = 1; i <= totalSeats; i++) {
-    const randomNumber = Math.floor(Math.random() * 91) + 10;
+    const randomNumber = Math.floor(Math.random() * 150) + 100;
     theater.seats.push({ seatNumber: i , price : randomNumber });
   }
 
