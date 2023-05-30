@@ -31,6 +31,10 @@ const TheaterSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
       },
+      price : {
+        type : Number,
+        required : true
+      }
     },
   ],
 });
@@ -40,7 +44,8 @@ TheaterSchema.pre("save", function (next) {
 
   const { totalSeats } = theater;
   for (let i = 1; i <= totalSeats; i++) {
-    theater.seats.push({ seatNumber: i });
+    const randomNumber = Math.floor(Math.random() * 91) + 10;
+    theater.seats.push({ seatNumber: i , price : randomNumber });
   }
 
   next();
