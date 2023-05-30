@@ -1,6 +1,7 @@
 const Theater = require("../models/theaterModel");
 const { createError } = require("../utils/error");
 const { createTheater } = require("../services/theaterService");
+const User = require("../models/userModel");
 
 //Post theater
 exports.postTheater = async (req, res, next) => {
@@ -34,21 +35,24 @@ exports.theaterById = async (req, res, next) => {
 
 exports.bookSeat = async (req, res, next) => {
   try {
-    
-    const {ticketItem, id} = req.body
+    const { ticketItem, id } = req.body;
+    const { _id } = req.user;
 
     const theater = await Theater.findById(id);
+    const user = await User.findById(_id);
     // console.log(ticketItem)
-    
-    
-    ticketItem.map(async(item)=> {
-      const seat = theater.seats.find((seat) => seat._id == item.seatDetails._id);
-      seat.isBooked = true;
-    })
-    await theater.save();
-    
-    res.status(200).json({ theater });
 
+    ticketItem.map(async (item) => {
+      const seat = theater.seats.find(
+        (seat) => seat._id == item.seatDetails._id
+      );
+      seat.isBooked = true;
+    });
+    await theater.save();
+    await user.noOfOrders++;
+    await user.save();
+
+    res.status(200).json({ theater });
   } catch (error) {
     next();
   }
