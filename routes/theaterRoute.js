@@ -16,6 +16,6 @@ router
 
 router.route("/all-theaters").get(verifyToken, allTheaters);
 router.route("/:id").get(verifyToken, theaterById);
-router.route("/:id/:seatId").post(verifyToken, bookSeat);
+router.route("/book-seat").post(verifyToken, bookSeat);
 
 module.exports = router;

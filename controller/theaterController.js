@@ -34,16 +34,21 @@ exports.theaterById = async (req, res, next) => {
 
 exports.bookSeat = async (req, res, next) => {
   try {
-    const { id, seatId } = req.params;
+    
+    const {ticketItem, id} = req.body
+
     const theater = await Theater.findById(id);
-
-    const seat = theater.seats.find((seat) => seat._id == seatId);
-
-    seat.isBooked = true;
-
+    // console.log(ticketItem)
+    
+    
+    ticketItem.map(async(item)=> {
+      const seat = theater.seats.find((seat) => seat._id == item.seatDetails._id);
+      seat.isBooked = true;
+    })
     await theater.save();
+    
+    res.status(200).json({ theater });
 
-    res.status(200).json({ seat });
   } catch (error) {
     next();
   }
