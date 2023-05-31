@@ -8,6 +8,8 @@ const {
   forgetPassword,
   resetPassword
 } = require("../controller/userController");
+const  {downLoadTicket} = require('../controller/downLoadTicket')
+
 
 const { verifyToken , verifyAdmin} = require("../utils/authentication");
 
@@ -21,5 +23,6 @@ router.route("/me").get(verifyToken, me);
 router.route("/check").get(verifyToken,verifyAdmin, check);
 router.route('/forget-password').post(forgetPassword)
 router.route('/reset-password/:token').post(resetPassword)
+router.route('/download').post(downLoadTicket)
 
 module.exports = router;

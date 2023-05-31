@@ -46,6 +46,9 @@ exports.bookSeat = async (req, res, next) => {
       const seat = theater.seats.find(
         (seat) => seat._id == item.seatDetails._id
       );
+      if(seat.isBooked === true){
+        next(createError(400, "Seat Already Booked"))
+      }
       seat.isBooked = true;
     });
     await theater.save();
